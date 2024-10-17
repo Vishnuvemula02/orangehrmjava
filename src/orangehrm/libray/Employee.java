@@ -1,0 +1,79 @@
+package orangehrm.libray;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import utils.AppUtils;
+
+public class Employee extends AppUtils
+{
+	public boolean addEmployee (String fname,String lname) 
+	{
+
+		driver.findElement(By.linkText("PIM")).click();
+		driver.findElement(By.linkText("Add EMPloyee")).click();
+		driver.findElement(By.id("firstName")).sendKeys(fname);
+		driver.findElement(By.id("lastName")).sendKeys(lname);
+		String empid = driver.findElement(By.id("employeeld")).getAttribute("value");
+		driver.findElement(By.id("btnSave")).click();
+
+		driver.findElement(By.linkText("Employee List")).click();
+		driver.findElement(By.id("empsearch_id")).sendKeys(empid);
+		driver.findElement(By.id("searchBtn")).click();
+
+		WebElement emptable = driver.findElement(By.id("resultTable"));
+
+		List<WebElement> rows= emptable.findElements(By.tagName("tr"));
+		boolean res = false;
+		for(int i=1;i<rows.size();i++) 
+		{
+			List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+			if(cols.get(1).getText().equals(empid))
+				//if it changing we need to create for each loop
+			{
+				res = true;
+				break;
+			}			
+
+		}
+		return res;
+
+	}
+
+	public boolean addEmployee (String fname,String mname,String lname) 
+	{
+
+		driver.findElement(By.linkText("PIM")).click();
+		driver.findElement(By.linkText("Add EMPloyee")).click();
+		driver.findElement(By.id("firstName")).sendKeys(fname);
+		driver.findElement(By.id("middleName")).sendKeys(mname);
+		driver.findElement(By.id("lastName")).sendKeys(lname);
+		String empid = driver.findElement(By.id("employeeld")).getAttribute("value");
+		driver.findElement(By.id("btnSave")).click();
+
+		driver.findElement(By.linkText("Employee List")).click();
+		driver.findElement(By.id("empsearch_id")).sendKeys(empid);
+		driver.findElement(By.id("searchBtn")).click();
+
+		WebElement emptable = driver.findElement(By.id("resultTable"));
+
+		List<WebElement> rows= emptable.findElements(By.tagName("tr"));
+		boolean res = false;
+		for(int i=1;i<rows.size();i++) 
+		{
+			List<WebElement> cols = rows.get(i).findElements(By.tagName("td"));
+			if(cols.get(1).getText().equals(empid))
+				//if it changing we need to create for each loop
+			{
+				res = true;
+				break;
+			}			
+
+		}
+		return res;
+	}
+
+}
